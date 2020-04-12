@@ -17,4 +17,5 @@ public:
 	void Unbind() const;
 	inline int GetWidth() const { return m_Width; };
 	inline int GetHeight() const { return m_Height; }
+	inline unsigned int GetRendererId() { return m_RendererId; };
 };

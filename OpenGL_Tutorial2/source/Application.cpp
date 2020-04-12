@@ -23,6 +23,9 @@
 #include "tests/TestClearColor.h"
 #include "tests/TestTranslation.h"
 #include "tests/TestTexture2D.h"
+#include "tests/TestBatchRendering.h"
+#include "tests/TestBatchRenderingColor.h"
+#include "tests/TestBatchRenderingTexture.h"
 
 #define WINDOW_WIDTH 960
 #define WINDOW_HEIGHT 540
@@ -88,6 +91,12 @@
 // or can be done by changing the postion (MVP matrix)
 // Texture, coord with vertex color, coord with uniform
 
+// Tutorial 28 Notes
+// Batch rendering, render multiple pieces of geometry at once
+// Combining multiple images in one buffer to render once
+// Requires dynamic vertex buffers
+
+
 int main(void)
 {
     GLFWwindow* window;
@@ -140,7 +149,9 @@ int main(void)
 
         testMenu->RegisterTest<test::TestClearColor>("Clear Color");
         testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
-          
+        testMenu->RegisterTest<test::TestBatchRendering>("Batch Rendering");
+        testMenu->RegisterTest<test::TestBatchRenderingColor>("Batch Rendering with Color");
+        testMenu->RegisterTest<test::TestBatchRenderingTexture>("Batch Rendering Texture");
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {

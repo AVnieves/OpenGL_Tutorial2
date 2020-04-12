@@ -20,8 +20,10 @@
 #include "imgui/imgui_impl_opengl3.h"
 
 #include "tests/TestClearColor.h"
+#include "tests/TestTranslation.h"
 
-
+#define WINDOW_WIDTH 960
+#define WINDOW_HEIGHT 540
 
 // Tutorial 14 Notes
 // Abstracting vertex array objects should enable tying vertex buffer with layout
@@ -99,7 +101,7 @@ int main(void)
     // default is compatibility which creates a default
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -114,7 +116,19 @@ int main(void)
     if (glewInit() != GLEW_OK)
         std::cout << " ERROR " << std::endl;
     std::cout << glGetString(GL_VERSION) << std::endl;
+
     {
+        float triPositions[6] =
+        {
+            -WINDOW_WIDTH/4, -WINDOW_HEIGHT/4,
+            -WINDOW_WIDTH/4,  WINDOW_HEIGHT/4,
+                          0,  WINDOW_HEIGHT /4
+        };
+        unsigned int triIndices[3] =
+        {
+            0,1,2
+        };
+
         // T4: Vertex buffer with position and texture
         float positions[16] = {
              -50.f, -50.f, 0.0f, 0.0f,
@@ -183,7 +197,9 @@ int main(void)
         float r = 0.0f;
         float increment = 0.05;
 
-        //test::TestClearColor test;
+        test::TestClearColor test;
+        test::TestTranslation test2(translationA, WINDOW_WIDTH, WINDOW_HEIGHT);
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
@@ -193,46 +209,15 @@ int main(void)
             //test.OnUpdate(0.f);
             //test.OnRender();
 
+            test2.OnUpdate(0.f);
+            test2.OnRender(va, ib, shader, renderer);
+
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
             //test.OnImGuiRender();
-
-
             {
-                glm::mat4 model = glm::translate(glm::mat4(1.f), translationA);
-                glm::mat4 mvp = proj * view * model;
-                shader.Bind();
-                shader.SetUniformMat4f("u_MVP", mvp);
-                renderer.Draw(va, ib, shader);
-            }
-
-            {
-                glm::mat4 model = glm::translate(glm::mat4(1.f), translationB);
-                glm::mat4 mvp = proj * view * model;
-                shader.Bind();
-                shader.SetUniformMat4f("u_MVP", mvp);
-                renderer.Draw(va, ib, shader);
-            }
-
-            if (r > 1.0f)
-                increment = -0.05f;
-            else if (r < 0.0f)
-                increment = 0.05f;
-            r += increment;
-
-            // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-            {
-                static float f = 0.0f;
-                static int counter = 0;
-
-                ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-                ImGui::SliderFloat3("TranslationA", &translationA.x, 0.0f, 960.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-                ImGui::SliderFloat3("TranslationB", &translationB.x, 0.0f, 960.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-
-                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-                ImGui::End();
+                test2.OnImGuiRender();
             }
 
             ImGui::Render();

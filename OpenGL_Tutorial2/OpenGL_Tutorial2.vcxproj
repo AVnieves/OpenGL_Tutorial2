@@ -154,6 +154,7 @@
     <ClCompile Include="source\Renderer.cpp" />
     <ClCompile Include="source\Shader.cpp" />
     <ClCompile Include="source\tests\TestClearColor.cpp" />
+    <ClCompile Include="source\tests\TestTranslation.cpp" />
     <ClCompile Include="source\Texture.cpp" />
     <ClCompile Include="source\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="source\vendor\imgui\imgui.cpp" />
@@ -178,6 +179,7 @@
     <ClInclude Include="source\Shader.h" />
     <ClInclude Include="source\tests\Test.h" />
     <ClInclude Include="source\tests\TestClearColor.h" />
+    <ClInclude Include="source\tests\TestTranslation.h" />
     <ClInclude Include="source\Texture.h" />
     <ClInclude Include="source\vendor\glm\common.hpp" />
     <ClInclude Include="source\vendor\glm\detail\compute_common.hpp" />

@@ -66,6 +66,9 @@
     <ClCompile Include="source\tests\TestClearColor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\tests\TestTranslation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dependencies\GLFW\glfw3.h">
@@ -870,6 +873,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="source\tests\TestClearColor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="source\tests\TestTranslation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

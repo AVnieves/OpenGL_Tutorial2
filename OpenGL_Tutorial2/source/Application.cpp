@@ -136,34 +136,34 @@ int main(void)
         GLCall(glGenVertexArrays(1, &vao));
         GLCall(glBindVertexArray(vao));
 
-        //VertexArray va;        
-        //VertexBuffer vb(positions, 4 * 4 * sizeof(float));
-        //VertexBufferLayout layout;
-        //layout.Push<float>(2);
-        //layout.Push<float>(2);
-        //va.AddBuffer(vb, layout);
+        VertexArray va;        
+        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
+        VertexBufferLayout layout;
+        layout.Push<float>(2);
+        layout.Push<float>(2);
+        va.AddBuffer(vb, layout);
   
-        //IndexBuffer ib(indices, 6);
-        //
-        //// MVP movement
-        //glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.f, 1.f);
-        //glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.f,0.f,0.f));
-        //glm::mat4 model = glm::translate(glm::mat4(1.f), glm::vec3(200, 200, 0));
-        //glm::mat4 mvp = proj * view * model;
+        IndexBuffer ib(indices, 6);
+        
+        // MVP movement
+        glm::mat4 proj = glm::ortho(0.f, 960.f, 0.f, 540.f, -1.f, 1.f);
+        glm::mat4 view = glm::translate(glm::mat4(1.f), glm::vec3(0.f,0.f,0.f));
+        glm::mat4 model = glm::translate(glm::mat4(1.f), glm::vec3(200, 200, 0));
+        glm::mat4 mvp = proj * view * model;
 
-        //Shader shader("res/shaders/Basic.shader");
-        //shader.Bind();
-        //shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+        Shader shader("res/shaders/Basic.shader");
+        shader.Bind();
+        shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
 
 
-        //Texture texture("res/textures/bricks.jpg");
-        //texture.Bind(0);
-        //shader.SetUniform1i("u_Texture", 0);
+        Texture texture("res/textures/bricks.jpg");
+        texture.Bind(0);
+        shader.SetUniform1i("u_Texture", 0);
 
-        //va.Unbind();
-        //shader.Unbind();
-        //vb.Unbind();
-        //ib.Unbind();
+        va.Unbind();
+        shader.Unbind();
+        vb.Unbind();
+        ib.Unbind();
 
         Renderer renderer;
 
@@ -177,30 +177,29 @@ int main(void)
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui::StyleColorsDark();
 
-  
         glm::vec3 translationA(200, 200, 0);
         glm::vec3 translationB(400, 200, 0);
 
         float r = 0.0f;
         float increment = 0.05;
 
-        test::TestClearColor test;
+        //test::TestClearColor test;
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
             renderer.Clear();
 
-            test.OnUpdate(0.f);
-            test.OnRender();
+            //test.OnUpdate(0.f);
+            //test.OnRender();
 
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            test.OnImGuiRender();
+            //test.OnImGuiRender();
 
 
- /*           {
+            {
                 glm::mat4 model = glm::translate(glm::mat4(1.f), translationA);
                 glm::mat4 mvp = proj * view * model;
                 shader.Bind();
@@ -214,27 +213,27 @@ int main(void)
                 shader.Bind();
                 shader.SetUniformMat4f("u_MVP", mvp);
                 renderer.Draw(va, ib, shader);
-            }*/
+            }
 
-            //if (r > 1.0f)
-            //    increment = -0.05f;
-            //else if (r < 0.0f)
-            //    increment = 0.05f;
-            //r += increment;
+            if (r > 1.0f)
+                increment = -0.05f;
+            else if (r < 0.0f)
+                increment = 0.05f;
+            r += increment;
 
-            //// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-            //{
-            //    static float f = 0.0f;
-            //    static int counter = 0;
+            // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
+            {
+                static float f = 0.0f;
+                static int counter = 0;
 
-            //    ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+                ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
 
-            //    ImGui::SliderFloat3("TranslationA", &translationA.x, 0.0f, 960.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            //    ImGui::SliderFloat3("TranslationB", &translationB.x, 0.0f, 960.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+                ImGui::SliderFloat3("TranslationA", &translationA.x, 0.0f, 960.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+                ImGui::SliderFloat3("TranslationB", &translationB.x, 0.0f, 960.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
 
-            //    ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-            //    ImGui::End();
-            //}
+                ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+                ImGui::End();
+            }
 
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
